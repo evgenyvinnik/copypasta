@@ -8,18 +8,36 @@ import { DropZone } from "./DropZone";
 import Grow from "@mui/material/Grow";
 import Divider from "@mui/material/Divider";
 
+import { FileType } from "./constants";
+
 function App() {
   const [textEntered, setTextEntered] = useState<boolean | null>(null);
 
   const [text, setText] = useState<string>("");
   const [file, setFile] = useState<File | null>(null);
 
+  const [components, setComponents] = useState([]);
+
   useEffect(() => {
     if (text !== "") {
       setTextEntered(true);
+      console.log("TEXT");
     } else if (file != null) {
       setTextEntered(false);
-      console.log("file.type", file.type);
+      switch (file.type) {
+        case FileType.PDF:
+          console.log("PDF");
+          break;
+        case FileType.PNG:
+          console.log("PNG");
+          break;
+        case FileType.TEXT:
+        default:
+          console.log("TEXT");
+          break;
+      }
+
+      //addComponent(FileType[file.type as FileType]);
     } else {
       setTextEntered(null);
     }
@@ -68,6 +86,9 @@ function App() {
             </Box>
           </Grow>
         </Box>
+      </Container>
+      <Container>
+        <Box sx={{ display: "flex", my: 4 }}>{components}</Box>
       </Container>
     </div>
   );

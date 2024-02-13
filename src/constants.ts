@@ -1,3 +1,5 @@
-export const TEXT = "text/plain";
-export const PDF = "application/pdf";
-export const PNG = "image/png";
+export enum FileType {
+  TEXT = "text/plain",
+  PDF = "application/pdf",
+  PNG = "image/png",
+}
