@@ -1,9 +1,10 @@
-import React, { useEffect, useRef } from "react";
+import { useEffect, useState, useRef } from "react";
 import hljs from "highlight.js";
 import "highlight.js/styles/atom-one-dark.css";
 import javascript from "highlight.js/lib/languages/javascript";
 import Button from "@mui/material/Button";
 import jsPDF from "jspdf";
+import { MyPdfViewer } from "./MyPdfViewer";
 
 interface CodeHighlighterProps {
   code: string;
@@ -13,6 +14,8 @@ interface CodeHighlighterProps {
 export const CodeHighlighter = ({ code, language }: CodeHighlighterProps) => {
   const codeRef = useRef<HTMLElement | null>(null);
   const printRef = useRef(null);
+
+  const [file, setFile] = useState<string | null>(null);
 
   useEffect(() => {
     hljs.registerLanguage("javascript", javascript);
@@ -56,10 +59,12 @@ export const CodeHighlighter = ({ code, language }: CodeHighlighterProps) => {
           const filename = "generatedPdf.pdf";
           await doc.save(filename, { returnPromise: true });
 
-          const a = document.createElement("a");
-          a.href = filename;
-          // this points to non existing file
-          document.body.appendChild(a);
+          setFile(doc.output("datauristring"));
+
+          // const a = document.createElement("a");
+          // a.href = filename;
+          // // this points to non existing file
+          // document.body.appendChild(a);
         },
       });
     }
@@ -89,6 +94,8 @@ export const CodeHighlighter = ({ code, language }: CodeHighlighterProps) => {
       >
         Generate PDF
       </Button>
+
+      {file != null ? <MyPdfViewer file={file} /> : null}
     </div>
   ) : null;
 };
