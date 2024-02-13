@@ -12,14 +12,17 @@ function App() {
   const [textEntered, setTextEntered] = useState<boolean | null>(null);
 
   const [text, setText] = useState<string>("");
+  const [file, setFile] = useState<File | null>(null);
 
   useEffect(() => {
     if (text !== "") {
       setTextEntered(true);
+    } else if (file != null){
+      setTextEntered(false);
     } else {
       setTextEntered(null);
     }
-  }, [text]);
+  }, [text, file]);
 
   return (
     <div className="App">
@@ -41,7 +44,7 @@ function App() {
               label="Enter any text"
               multiline
               fullWidth
-              rows={16}
+              rows={13}
               value={text}
               onChange={(event) => {
                 setText(event.target.value);
@@ -60,7 +63,7 @@ function App() {
             timeout={1000}
           >
             <Box>
-              <DropZone />
+              <DropZone setFile={setFile} />
             </Box>
           </Grow>
         </Box>

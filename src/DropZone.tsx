@@ -1,86 +1,92 @@
-import React from "react";
+import { useState } from "react";
 import classnames from "classnames";
-// import { useDropzone } from "react-dropzone";
 import { DropzoneOptions, useDropzone } from "react-dropzone";
 import "./styles/animate-dropzone.css";
 import "./styles/dropzone.css";
+import Button from "@mui/material/Button";
+import Typography from "@mui/material/Typography";
 
-export function DropZone(_props: any) {
-  const {
-    acceptedFiles,
-    isDragActive,
-    fileRejections,
-    getRootProps,
-    getInputProps,
-    open,
-  } = useDropzone({
-    maxFiles: 1,
-  });
+export function DropZone({
+  setFile,
+}: {
+  setFile: React.Dispatch<React.SetStateAction<File | null>>;
+}) {
+  const accept = {
+    "image/png": [".png"],
+    "application/pdf": [".pdf"],
+    "text/plain": [".txt"],
+  };
 
-  const dropzoneClass = "";
-  const multiple = false;
+  const [isInvalid, setIsInvalid] = useState(false);
+
+  const onDragOver: DropzoneOptions["onDragOver"] = (e) => {
+    if (
+      !Array.from(e.dataTransfer.items).some((item) =>
+        accept.hasOwnProperty(item.type)
+      )
+    ) {
+      setIsInvalid(true);
+    } else {
+      setIsInvalid(false);
+    }
+  };
+
+  const onDrop: DropzoneOptions["onDrop"] = (acceptedFiles) => {
+    if (acceptedFiles.length !== 0) {
+      setFile(acceptedFiles[0]);
+    } else {
+      setFile(null);
+    }
+  };
+
+  const { acceptedFiles, isDragActive, getRootProps, getInputProps, open } =
+    useDropzone({
+      maxFiles: 1,
+      onDragOver,
+      onDrop,
+      accept: accept,
+    });
 
   const acceptedFileItems = acceptedFiles.map((file: File) => (
-    <li key={file.webkitRelativePath}>
+    <Typography variant="body1" key={file.name} gutterBottom>
       {file.name} - {file.size} bytes
-    </li>
+    </Typography>
   ));
 
-  const fileRejectionItems = fileRejections.map(({ file, errors }) => {
-    return (
-      <li key={file.webkitRelativePath}>
-        {file.name} - {file.size} bytes
-        <ul>
-          {errors.map((e) => (
-            <li key={e.code}>{e.message}</li>
-          ))}
-        </ul>
-      </li>
-    );
-  });
-  const className = "custom-wrapper";
-  const isInvalid = false;
-  const clickAnywhereForUpload = true;
   return (
     <section className="container">
       <div
         className={classnames([
           `dropzone-container`,
-          className,
+          "custom-wrapper",
           isDragActive ? "drag-active" : "",
           isInvalid ? "invalid" : "",
         ])}
-        onClick={clickAnywhereForUpload ? open : () => {}}
+        onClick={open}
         {...getRootProps()}
       >
         <div className="topbottom" />
         <div className="leftright" />
-        <div className={`dropzone ${dropzoneClass}`}>
+        <div className={"dropzone"}>
           <div className="instruction">
             Drag and drop your pdf, img, text files here.
-            {
-              <div>
-                <button className="uploadBtn" onClick={open}>
-                  Click Here
-                </button>
-              </div>
-            }
+            <div>
+              <Button variant="contained" onClick={open}>
+                Open file
+              </Button>
+            </div>
           </div>
         </div>
-
-        <input {...getInputProps()} multiple={multiple} />
+        <input {...getInputProps()} multiple={false} />
       </div>
-      {/* <div {...getRootProps({ className: "dropzone" })}>
-        <input {...getInputProps()} />
-        <p>Drag 'n' drop some files here, or click to select files</p>
-        <em>(1 files are the maximum number of files you can drop here)</em>
-      </div> */}
-      <aside>
-        <h4>Accepted files</h4>
-        <ul>{acceptedFileItems}</ul>
-        {/* <h4>Rejected files</h4>
-        <ul>{fileRejectionItems}</ul> */}
-      </aside>
+      {acceptedFiles.length ? (
+        <aside>
+          <Typography variant="h6" gutterBottom>
+            Uploaded file
+          </Typography>
+          {acceptedFileItems}
+        </aside>
+      ) : null}
     </section>
   );
 }
