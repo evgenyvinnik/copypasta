@@ -17,8 +17,9 @@ function App() {
   useEffect(() => {
     if (text !== "") {
       setTextEntered(true);
-    } else if (file != null){
+    } else if (file != null) {
       setTextEntered(false);
+      console.log("file.type", file.type);
     } else {
       setTextEntered(null);
     }

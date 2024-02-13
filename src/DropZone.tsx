@@ -14,7 +14,7 @@ export function DropZone({
   const accept = {
     "image/png": [".png"],
     "application/pdf": [".pdf"],
-    "text/plain": [".txt"],
+    "text/plain": [".txt", ".csv", ".js", ".py", ".c", ".h", ".cpp"],
   };
 
   const [isInvalid, setIsInvalid] = useState(false);
@@ -42,6 +42,7 @@ export function DropZone({
   const { acceptedFiles, isDragActive, getRootProps, getInputProps, open } =
     useDropzone({
       maxFiles: 1,
+      maxSize: 52428800,
       onDragOver,
       onDrop,
       accept: accept,
@@ -69,7 +70,7 @@ export function DropZone({
         <div className="leftright" />
         <div className={"dropzone"}>
           <div className="instruction">
-            Drag and drop your pdf, img, text files here.
+            Drag and drop your pdf, img, text files here (50MB max).
             <div>
               <Button variant="contained" onClick={open}>
                 Open file
@@ -82,7 +83,7 @@ export function DropZone({
       {acceptedFiles.length ? (
         <aside>
           <Typography variant="h6" gutterBottom>
-            Uploaded file
+            Selected file
           </Typography>
           {acceptedFileItems}
         </aside>
