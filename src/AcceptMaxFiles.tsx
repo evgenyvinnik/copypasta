@@ -2,8 +2,8 @@ import React from "react";
 import classnames from "classnames";
 // import { useDropzone } from "react-dropzone";
 import { DropzoneOptions, useDropzone } from "react-dropzone";
-import "./styles/animate-dropzone.scss";
-import "./styles/dropzone.scss";
+import "./styles/animate-dropzone.css";
+import "./styles/dropzone.css";
 
 export function AcceptMaxFiles(_props: any) {
   const {
