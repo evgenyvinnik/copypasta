@@ -9,11 +9,11 @@ import Link from "@mui/material/Link";
 import { AppBar, Toolbar } from "@mui/material";
 import TextField from "@mui/material/TextField";
 import { AcceptMaxFiles } from "./AcceptMaxFiles";
-
+import Grow from "@mui/material/Grow";
 import { createWorker } from "tesseract.js";
 // import Pdf from "@mikecousins/react-pdf";
 import { MyPdfViewer } from "./MyPdfViewer";
-
+import Divider from "@mui/material/Divider";
 function App() {
   const [value, setValue] = useState<File | null>(null);
   const [page, setPage] = useState(1);
@@ -100,22 +100,56 @@ function App() {
     URL.revokeObjectURL(url);
   };
 
+  const [checked, setChecked] = React.useState(true);
+
+  const handleCheckChange = () => {
+    setChecked((prev) => !prev);
+  };
+
   return (
     <div className="App">
       <AppBar position="sticky">
-        <Toolbar>text to pdf to image to text</Toolbar>
+        <Toolbar>
+          Mega Converter: text to pdf to image to text to pdf ad infinitum
+        </Toolbar>
       </AppBar>
+
+      <Container>
+        <Box sx={{ display: "flex", my: 4 }}>
+          <Grow
+            appear
+            in={checked}
+            style={{ transformOrigin: "0 0 0" }}
+            timeout={1000}
+          >
+            <TextField
+              id="outlined-multiline-static"
+              label="Enter any text"
+              multiline
+              fullWidth
+              rows={16}
+              placeholder="Enter any text"
+            />
+          </Grow>
+          <Divider orientation="vertical" variant="middle" flexItem>
+            OR
+          </Divider>
+          <Grow
+            appear
+            in={checked}
+            style={{ transformOrigin: "0 0 0" }}
+            timeout={1000}
+          >
+            <Box>
+              <AcceptMaxFiles />
+            </Box>
+          </Grow>
+        </Box>
+      </Container>
+
       <Container>
         <Box sx={{ my: 4 }}>
-          <TextField
-            id="outlined-multiline-static"
-            label="Enter any text"
-            multiline
-            fullWidth
-            rows={10}
-            placeholder="Enter any text"
-          />
-          <AcceptMaxFiles />{" "}
+          <AcceptMaxFiles />
         </Box>
 
         <Box sx={{ my: 4 }}>
@@ -157,38 +191,6 @@ function App() {
           </div>
         </Box>
         <MyPdfViewer />
-
-        {/* 
-        <Pdf file="./test.pdf" page={page}>
-          {({ pdfDocument, pdfPage, canvas }) => (
-            <>
-              {!pdfDocument && <span>Loading...</span>}
-              {canvas}
-              {Boolean(pdfDocument && pdfDocument.numPages) && (
-                <nav>
-                  <ul className="pager">
-                    <li className="previous">
-                      <button
-                        disabled={page === 1}
-                        onClick={() => setPage(page - 1)}
-                      >
-                        Previous
-                      </button>
-                    </li>
-                    <li className="next">
-                      <button
-                        disabled={page === pdfDocument.numPages}
-                        onClick={() => setPage(page + 1)}
-                      >
-                        Next
-                      </button>
-                    </li>
-                  </ul>
-                </nav>
-              )}
-            </>
-          )}
-        </Pdf> */}
       </Container>
     </div>
   );

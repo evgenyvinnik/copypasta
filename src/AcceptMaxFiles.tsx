@@ -78,8 +78,8 @@ export function AcceptMaxFiles(_props: any) {
       <aside>
         <h4>Accepted files</h4>
         <ul>{acceptedFileItems}</ul>
-        <h4>Rejected files</h4>
-        <ul>{fileRejectionItems}</ul>
+        {/* <h4>Rejected files</h4>
+        <ul>{fileRejectionItems}</ul> */}
       </aside>
     </section>
   );
