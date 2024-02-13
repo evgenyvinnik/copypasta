@@ -2,6 +2,7 @@ import React, { useState, useRef } from "react";
 import { usePdf } from "@mikecousins/react-pdf";
 
 import { createWorker } from "tesseract.js";
+import jsPDF from "jspdf";
 
 export const MyPdfViewer = () => {
   const [page, setPage] = useState(1);
@@ -85,6 +86,32 @@ export const MyPdfViewer = () => {
 
     setCsv(csvString);
   }, [ocr]);
+
+  const reportTemplateRef = useRef(null);
+
+  const handleGeneratePdf = () => {
+    const doc = new jsPDF({
+      format: "a2",
+      unit: "px",
+    });
+
+    // Adding the fonts
+    doc.setFont("Inter-Regular", "normal");
+    const leftMargin = 50;
+    const rightMargin = 50;
+    const topMargin = 50;
+    const bottomMargin = 50;
+    // doc.setMargins(leftMargin, topMargin, rightMargin, bottomMargin);
+
+    if (reportTemplateRef.current != null) {
+      doc.html(reportTemplateRef.current, {
+        margin: 50,
+        async callback(doc) {
+          await doc.save("document");
+        },
+      });
+    }
+  };
   /*
   function handleImageChange(e: any) {
     const file = e.target.files[0];
@@ -182,11 +209,14 @@ export const MyPdfViewer = () => {
         <div>
           <img src={imageData} alt="" />
         </div>
-        <div>
+        <div ref={reportTemplateRef}>
           {ocr.map((line: string, index: number) => {
             return <p key={index}>{line}</p>;
           })}
         </div>
+        <button className="button" onClick={handleGeneratePdf}>
+          Generate PDF
+        </button>
       </div>
     </div>
   );
