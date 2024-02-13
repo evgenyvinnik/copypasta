@@ -3,10 +3,16 @@ import { usePdf } from "@mikecousins/react-pdf";
 
 import { createWorker } from "tesseract.js";
 import jsPDF from "jspdf";
+import hljs from "highlight.js";
+import "highlight.js/styles/default.css"; // Import the default Highlight.js style
+
+import SyntaxHighlighter from "./SyntaxHighlighter";
 
 export const MyPdfViewer = () => {
   const [page, setPage] = useState(1);
   const canvasRef = useRef(null);
+
+  const codeString = "(num) => num + 1";
 
   const { pdfDocument, pdfPage } = usePdf({
     file: "resume.pdf",
@@ -70,6 +76,10 @@ export const MyPdfViewer = () => {
     setOcr([]);
     convertImageToText();
   }, [imageData]);
+
+  React.useEffect(() => {
+    hljs.highlightAll();
+  });
 
   React.useEffect(() => {
     if (!ocr) return;
@@ -214,6 +224,7 @@ export const MyPdfViewer = () => {
             return <p key={index}>{line}</p>;
           })}
         </div>
+        <SyntaxHighlighter sourceCode="const a = 3;" />
         <button className="button" onClick={handleGeneratePdf}>
           Generate PDF
         </button>
