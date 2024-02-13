@@ -5,7 +5,7 @@ import { DropzoneOptions, useDropzone } from "react-dropzone";
 import "./styles/animate-dropzone.css";
 import "./styles/dropzone.css";
 
-export function AcceptMaxFiles(_props: any) {
+export function DropZone(_props: any) {
   const {
     acceptedFiles,
     isDragActive,
@@ -57,7 +57,7 @@ export function AcceptMaxFiles(_props: any) {
         <div className="leftright" />
         <div className={`dropzone ${dropzoneClass}`}>
           <div className="instruction">
-            <p>Drag and drop your files here.</p>
+            Drag and drop your pdf, img, text files here.
             {
               <div>
                 <button className="uploadBtn" onClick={open}>
