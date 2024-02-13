@@ -5,17 +5,17 @@ import { createWorker } from "tesseract.js";
 import jsPDF from "jspdf";
 import hljs from "highlight.js";
 import "highlight.js/styles/default.css"; // Import the default Highlight.js style
+import Button from "@mui/material/Button";
+import { CodeHighlighter } from "./CodeHighlighter";
 
-import SyntaxHighlighter from "./SyntaxHighlighter";
-
-export const MyPdfViewer = () => {
+export const MyPdfViewer = ({ file }: { file: string }) => {
   const [page, setPage] = useState(1);
   const canvasRef = useRef(null);
 
-  const codeString = "(num) => num + 1";
+  // const codeString = "(num) => num + 1";
 
   const { pdfDocument, pdfPage } = usePdf({
-    file: "resume.pdf",
+    file: file,
     page,
     canvasRef,
   });
@@ -215,7 +215,7 @@ export const MyPdfViewer = () => {
           </div>
         </div>
       )}
-      <div className="display-flex">
+      {/* <div className="display-flex">
         <div>
           <img src={imageData} alt="" />
         </div>
@@ -224,11 +224,11 @@ export const MyPdfViewer = () => {
             return <p key={index}>{line}</p>;
           })}
         </div>
-        <SyntaxHighlighter sourceCode="const a = 3;" />
+        <CodeHighlighter language="javascript" code="const a = 3;" />
         <button className="button" onClick={handleGeneratePdf}>
           Generate PDF
         </button>
-      </div>
+      </div> */}
     </div>
   );
 };

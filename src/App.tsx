@@ -7,9 +7,9 @@ import TextField from "@mui/material/TextField";
 import { DropZone } from "./DropZone";
 import Grow from "@mui/material/Grow";
 import Divider from "@mui/material/Divider";
-import SyntaxHighlighter from "./SyntaxHighlighter";
-import { FileType } from "./constants";
 import { CodeHighlighter } from "./CodeHighlighter";
+import { FileType } from "./constants";
+
 function App() {
   const [textEntered, setTextEntered] = useState<boolean | null>(null);
 
@@ -23,8 +23,7 @@ function App() {
   useEffect(() => {
     if (text !== "") {
       setTextEntered(true);
-      setComponent(<CodeHighlighter language="jsx" code={text} />);
-      // setComponent(<SyntaxHighlighter sourceCode={text} />);
+      setComponent(<CodeHighlighter language="javascript" code={text} />);
     } else if (file != null) {
       setTextEntered(false);
       switch (file.type) {
@@ -39,8 +38,6 @@ function App() {
           console.log("TEXT");
           break;
       }
-
-      //addComponent(FileType[file.type as FileType]);
     } else {
       setTextEntered(null);
     }
