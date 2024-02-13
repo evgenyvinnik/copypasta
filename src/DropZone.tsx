@@ -7,8 +7,10 @@ import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 
 export function DropZone({
+  file,
   setFile,
 }: {
+  file: File | null;
   setFile: React.Dispatch<React.SetStateAction<File | null>>;
 }) {
   const accept = {
@@ -39,20 +41,17 @@ export function DropZone({
     }
   };
 
-  const { acceptedFiles, isDragActive, getRootProps, getInputProps, open } =
-    useDropzone({
-      maxFiles: 1,
-      maxSize: 52428800,
-      onDragOver,
-      onDrop,
-      accept: accept,
-    });
+  const { isDragActive, getRootProps, getInputProps, open } = useDropzone({
+    maxFiles: 1,
+    maxSize: 52428800,
+    onDragOver,
+    onDrop,
+    accept: accept,
+  });
 
-  const acceptedFileItems = acceptedFiles.map((file: File) => (
-    <Typography variant="body1" key={file.name} gutterBottom>
-      {file.name} - {file.size} bytes
-    </Typography>
-  ));
+  const remove = () => {
+    setFile(null);
+  };
 
   return (
     <section className="container">
@@ -80,12 +79,17 @@ export function DropZone({
         </div>
         <input {...getInputProps()} multiple={false} />
       </div>
-      {acceptedFiles.length ? (
+      {file != null ? (
         <aside>
           <Typography variant="h6" gutterBottom>
             Selected file
           </Typography>
-          {acceptedFileItems}
+          <Typography variant="body1" key={file.name} gutterBottom>
+            {file.name} - {file.size} bytes
+          </Typography>
+          <Button variant="contained" onClick={remove}>
+            Remove file
+          </Button>
         </aside>
       ) : null}
     </section>

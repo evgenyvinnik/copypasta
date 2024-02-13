@@ -82,7 +82,7 @@ function App() {
             timeout={1000}
           >
             <Box>
-              <DropZone setFile={setFile} />
+              <DropZone file={file} setFile={setFile} />
             </Box>
           </Grow>
         </Box>
