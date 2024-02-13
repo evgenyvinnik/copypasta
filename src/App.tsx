@@ -11,10 +11,12 @@ import TextField from "@mui/material/TextField";
 import { AcceptMaxFiles } from "./AcceptMaxFiles";
 
 import { createWorker } from "tesseract.js";
+// import Pdf from "@mikecousins/react-pdf";
+import { MyPdfViewer } from "./MyPdfViewer";
 
 function App() {
   const [value, setValue] = useState<File | null>(null);
-
+  const [page, setPage] = useState(1);
   const handleChange = (newValue: File | null) => {
     setValue(newValue);
   };
@@ -142,9 +144,6 @@ function App() {
             <div>
               <img src={imageData} alt="" />
               <div className="display-flex">
-                {/* <button type="button" onClick={getCsv} disabled={!csv}>
-              Copiar CSV
-            </button> */}
                 <button type="button" onClick={downloadCsv} disabled={!csv}>
                   Descargar CSV
                 </button>
@@ -157,6 +156,39 @@ function App() {
             </div>
           </div>
         </Box>
+        <MyPdfViewer />
+
+        {/* 
+        <Pdf file="./test.pdf" page={page}>
+          {({ pdfDocument, pdfPage, canvas }) => (
+            <>
+              {!pdfDocument && <span>Loading...</span>}
+              {canvas}
+              {Boolean(pdfDocument && pdfDocument.numPages) && (
+                <nav>
+                  <ul className="pager">
+                    <li className="previous">
+                      <button
+                        disabled={page === 1}
+                        onClick={() => setPage(page - 1)}
+                      >
+                        Previous
+                      </button>
+                    </li>
+                    <li className="next">
+                      <button
+                        disabled={page === pdfDocument.numPages}
+                        onClick={() => setPage(page + 1)}
+                      >
+                        Next
+                      </button>
+                    </li>
+                  </ul>
+                </nav>
+              )}
+            </>
+          )}
+        </Pdf> */}
       </Container>
     </div>
   );
