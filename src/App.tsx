@@ -1,5 +1,5 @@
 import "./styles/App.css";
-import { useState, useEffect } from "react";
+import { useState, useEffect, ReactElement } from "react";
 import Container from "@mui/material/Container";
 import Box from "@mui/material/Box";
 import { AppBar, Toolbar } from "@mui/material";
@@ -7,21 +7,24 @@ import TextField from "@mui/material/TextField";
 import { DropZone } from "./DropZone";
 import Grow from "@mui/material/Grow";
 import Divider from "@mui/material/Divider";
-
+import SyntaxHighlighter from "./SyntaxHighlighter";
 import { FileType } from "./constants";
-
+import { CodeHighlighter } from "./CodeHighlighter";
 function App() {
   const [textEntered, setTextEntered] = useState<boolean | null>(null);
 
   const [text, setText] = useState<string>("");
   const [file, setFile] = useState<File | null>(null);
 
-  const [components, setComponents] = useState([]);
+  const [component, setComponent] = useState<ReactElement<any, any> | null>(
+    null
+  );
 
   useEffect(() => {
     if (text !== "") {
       setTextEntered(true);
-      console.log("TEXT");
+      setComponent(<CodeHighlighter language="jsx" code={text} />);
+      // setComponent(<SyntaxHighlighter sourceCode={text} />);
     } else if (file != null) {
       setTextEntered(false);
       switch (file.type) {
@@ -87,9 +90,7 @@ function App() {
           </Grow>
         </Box>
       </Container>
-      <Container>
-        <Box sx={{ display: "flex", my: 4 }}>{components}</Box>
-      </Container>
+      <Container>{component}</Container>
     </div>
   );
 }
