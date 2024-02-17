@@ -87,7 +87,7 @@ function App() {
           </Grow>
         </Box>
       </Container>
-     {component}
+      {component}
     </div>
   );
 }
