@@ -7,7 +7,11 @@ import Button from "@mui/material/Button";
 import { createWorker } from "tesseract.js";
 import { CodeBlock } from "./CodeBlock";
 
-export const MyPdfViewer = ({ file }: { file: string }) => {
+interface MyPdfViewerProps {
+  file: string;
+}
+
+export const MyPdfViewer = ({ file }: MyPdfViewerProps) => {
   const [page, setPage] = useState(1);
   const canvasRef = useRef(null);
 

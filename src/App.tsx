@@ -9,6 +9,7 @@ import Grow from "@mui/material/Grow";
 import Divider from "@mui/material/Divider";
 import { CodeHighlighter } from "./CodeHighlighter";
 import { FileType } from "./constants";
+import { MyPdfViewer } from "./MyPdfViewer";
 
 function App() {
   const [textEntered, setTextEntered] = useState<boolean | null>(null);
@@ -28,7 +29,28 @@ function App() {
       setTextEntered(false);
       switch (file.type) {
         case FileType.PDF:
-          console.log("PDF");
+          var reader = new FileReader();
+          reader.readAsDataURL(file);
+          reader.onload = () => {
+            if (!!reader.result) {
+              console.log("reader.result", reader.result);
+              setComponent(<MyPdfViewer file={reader.result.toString()} />);
+            }
+          };
+          // const result = reader.result;
+          //setComponent(<MyPdfViewer file={file.webkitRelativePath} />);
+          // var reader = new FileReader();
+          // reader.readAsText(file);
+          // setComponent(<MyPdfViewer file={reader.result} />);
+          // reader.onload = function (e) {
+          //   var contents = e?.target?.result;
+          //   if (contents != null) {
+
+          //   }
+          //   // displayContents(contents);
+          // };
+          // reader.readAsText(file);
+
           break;
         case FileType.PNG:
           console.log("PNG");
