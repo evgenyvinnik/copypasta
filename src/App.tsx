@@ -27,41 +27,37 @@ function App() {
       setComponent(<CodeHighlighter language="javascript" code={text} />);
     } else if (file != null) {
       setTextEntered(false);
+      let reader = new FileReader();
       switch (file.type) {
         case FileType.PDF:
-          var reader = new FileReader();
           reader.readAsDataURL(file);
           reader.onload = () => {
             if (!!reader.result) {
-              console.log("reader.result", reader.result);
               setComponent(<MyPdfViewer file={reader.result.toString()} />);
             }
           };
-          // const result = reader.result;
-          //setComponent(<MyPdfViewer file={file.webkitRelativePath} />);
-          // var reader = new FileReader();
-          // reader.readAsText(file);
-          // setComponent(<MyPdfViewer file={reader.result} />);
-          // reader.onload = function (e) {
-          //   var contents = e?.target?.result;
-          //   if (contents != null) {
-
-          //   }
-          //   // displayContents(contents);
-          // };
-          // reader.readAsText(file);
-
           break;
         case FileType.PNG:
           console.log("PNG");
           break;
         case FileType.TEXT:
         default:
-          console.log("TEXT");
+          reader.readAsText(file);
+          reader.onload = () => {
+            if (!!reader.result) {
+              setComponent(
+                <CodeHighlighter
+                  language="javascript"
+                  code={reader.result.toString()}
+                />
+              );
+            }
+          };
           break;
       }
     } else {
       setTextEntered(null);
+      setComponent(null);
     }
   }, [text, file]);
 

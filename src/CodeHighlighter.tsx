@@ -103,11 +103,13 @@ export const CodeHighlighter = ({ code, language }: CodeHighlighterProps) => {
     <>
       <Container>
         <Box sx={{ mb: 4 }}>
-          <pre ref={printRef}>
-            <code ref={codeRef} className={`language-${language}`}>
-              {code}
-            </code>
-          </pre>
+          <Box sx={{ height: "400px", overflow: "scroll" }}>
+            <pre style={{}} ref={printRef}>
+              <code ref={codeRef} className={`language-${language}`}>
+                {code}
+              </code>
+            </pre>
+          </Box>
           <Button
             className="copy-button"
             variant="contained"

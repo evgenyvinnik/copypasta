@@ -106,21 +106,21 @@ export const MyPdfViewer = ({ file }: MyPdfViewerProps) => {
       <Container>
         <Box sx={{ mb: 4 }}>
           <Button
-            disabled={page === pdfDocument?.numPages}
-            className="next-button"
-            variant="contained"
-            onClick={nextPage}
-          >
-            Next Page
-          </Button>
-          <Button
-            sx={{ ml: 1 }}
             disabled={page === 1}
             className="generate-button"
             variant="contained"
             onClick={prevPage}
           >
             Previous Page
+          </Button>
+          <Button
+            sx={{ ml: 1 }}
+            disabled={page === pdfDocument?.numPages}
+            className="next-button"
+            variant="contained"
+            onClick={nextPage}
+          >
+            Next Page
           </Button>
           <Button
             sx={{ ml: 1 }}
@@ -136,7 +136,7 @@ export const MyPdfViewer = ({ file }: MyPdfViewerProps) => {
             variant="contained"
             onClick={recognizeText}
           >
-            Recognize Text
+            Recognize text on the page
           </Button>
         </Box>
         <Snackbar
