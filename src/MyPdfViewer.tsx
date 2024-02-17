@@ -23,6 +23,7 @@ export const MyPdfViewer = ({ file }: MyPdfViewerProps) => {
   const [open, setOpen] = useState(false);
   const [message, setMessage] = useState("");
   const [ocr, setOCr] = useState("");
+
   const nextPage = () => {
     setPage(page + 1);
   };
@@ -35,7 +36,7 @@ export const MyPdfViewer = ({ file }: MyPdfViewerProps) => {
     setMessage("Saving image!");
     setOpen(true);
 
-    const canvas = canvasRef.current; // document.getElementById("canvas") as HTMLCanvasElement;
+    const canvas = canvasRef.current;
     if (canvas != null) {
       const canvasImage = (canvas as any).toDataURL("image/png");
 
@@ -145,7 +146,10 @@ export const MyPdfViewer = ({ file }: MyPdfViewerProps) => {
           onClose={handleClose}
           message={message}
         />
-        <canvas ref={canvasRef} />
+        <canvas
+          style={{ width: "100%", objectFit: "scale-down" }}
+          ref={canvasRef}
+        />
       </Container>
       {ocr === "" ? null : <CodeBlock code={ocr} />}
     </>

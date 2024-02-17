@@ -65,11 +65,8 @@ export const CodeHighlighter = ({ code, language }: CodeHighlighterProps) => {
     const doc = new jsPDF({
       orientation: "landscape",
       format: "a4",
-      unit: "px",
+      unit: "pt",
     });
-
-    // Adding the fonts
-    doc.setFont("Inter-Regular", "normal");
 
     if (printRef.current != null) {
       doc.html(printRef.current, {

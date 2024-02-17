@@ -10,6 +10,7 @@ import Divider from "@mui/material/Divider";
 import { CodeHighlighter } from "./CodeHighlighter";
 import { FileType } from "./constants";
 import { MyPdfViewer } from "./MyPdfViewer";
+import { ImagePreview } from "./ImagePreview";
 
 function App() {
   const [textEntered, setTextEntered] = useState<boolean | null>(null);
@@ -38,7 +39,12 @@ function App() {
           };
           break;
         case FileType.PNG:
-          console.log("PNG");
+          reader.readAsDataURL(file);
+          reader.onload = () => {
+            if (!!reader.result) {
+              setComponent(<ImagePreview file={reader.result.toString()} />);
+            }
+          };
           break;
         case FileType.TEXT:
         default:
