@@ -23,9 +23,39 @@ export const MyPdfViewer = ({ file }: { file: string }) => {
     setPage(page - 1);
   };
 
-  const saveImage = () => {};
+  const saveImage = () => {
+    setMessage("Saving image!");
+    setOpen(true);
 
-  const recognizeText = () => {};
+    const canvas = canvasRef.current; // document.getElementById("canvas") as HTMLCanvasElement;
+    if (canvas != null) {
+      const canvasImage = (canvas as any).toDataURL("image/png");
+
+      if (canvasImage != null) {
+        // this can be used to download any image from webpage to local disk
+        let xhr = new XMLHttpRequest();
+        xhr.responseType = "blob";
+        xhr.onload = function () {
+          let a = document.createElement("a");
+          a.href = window.URL.createObjectURL(xhr.response);
+          a.download = "generatedImage.png";
+          a.style.display = "none";
+          document.body.appendChild(a);
+          a.click();
+          a.remove();
+        };
+        xhr.open("GET", canvasImage); // This is to download the canvas Image
+        xhr.send();
+        setMessage("Saved image!");
+        setOpen(true);
+      }
+    }
+  };
+
+  const recognizeText = () => {
+    setMessage("Recognizing text on image!");
+    setOpen(true);
+  };
 
   const [open, setOpen] = useState(false);
   const [message, setMessage] = useState("");
