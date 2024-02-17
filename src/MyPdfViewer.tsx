@@ -110,7 +110,7 @@ export const MyPdfViewer = ({ file }: { file: string }) => {
             Next Page
           </Button>
           <Button
-            sx={{ mx: 1 }}
+            sx={{ ml: 1 }}
             disabled={page === 1}
             className="generate-button"
             variant="contained"
@@ -119,7 +119,7 @@ export const MyPdfViewer = ({ file }: { file: string }) => {
             Previous Page
           </Button>
           <Button
-            sx={{ mx: 1 }}
+            sx={{ ml: 1 }}
             className="save-button"
             variant="contained"
             onClick={saveImage}
@@ -127,7 +127,7 @@ export const MyPdfViewer = ({ file }: { file: string }) => {
             Save image
           </Button>
           <Button
-            sx={{ mx: 1 }}
+            sx={{ ml: 1 }}
             className="recognize-button"
             variant="contained"
             onClick={recognizeText}
