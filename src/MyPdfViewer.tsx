@@ -1,5 +1,6 @@
 import { useState, useRef } from "react";
 import { usePdf } from "@mikecousins/react-pdf";
+import Container from "@mui/material/Container";
 
 export const MyPdfViewer = ({ file }: { file: string }) => {
   const [page, setPage] = useState(1);
@@ -12,7 +13,7 @@ export const MyPdfViewer = ({ file }: { file: string }) => {
   });
 
   return (
-    <div>
+    <Container>
       {!pdfDocument && <span>Loading...</span>}
       <canvas id="canvas" ref={canvasRef} />
       {Boolean(pdfDocument && pdfDocument.numPages) && (
@@ -34,6 +35,6 @@ export const MyPdfViewer = ({ file }: { file: string }) => {
           </ul>
         </nav>
       )}
-    </div>
+    </Container>
   );
 };
