@@ -5,6 +5,7 @@ import Box from "@mui/material/Box";
 import Snackbar from "@mui/material/Snackbar";
 import Button from "@mui/material/Button";
 import { createWorker } from "tesseract.js";
+import { CodeBlock } from "./CodeBlock";
 
 export const MyPdfViewer = ({ file }: { file: string }) => {
   const [page, setPage] = useState(1);
@@ -97,50 +98,52 @@ export const MyPdfViewer = ({ file }: { file: string }) => {
   };
 
   return pdfDocument ? (
-    <Container>
-      <Box sx={{ mb: 4 }}>
-        <Button
-          disabled={page === pdfDocument?.numPages}
-          className="next-button"
-          variant="contained"
-          onClick={nextPage}
-        >
-          Next Page
-        </Button>
-        <Button
-          sx={{ mx: 1 }}
-          disabled={page === 1}
-          className="generate-button"
-          variant="contained"
-          onClick={prevPage}
-        >
-          Previous Page
-        </Button>
-        <Button
-          sx={{ mx: 1 }}
-          className="save-button"
-          variant="contained"
-          onClick={saveImage}
-        >
-          Save image
-        </Button>
-        <Button
-          sx={{ mx: 1 }}
-          className="recognize-button"
-          variant="contained"
-          onClick={recognizeText}
-        >
-          Recognize Text
-        </Button>
-      </Box>
-      <Snackbar
-        open={open}
-        autoHideDuration={3000}
-        onClose={handleClose}
-        message={message}
-      />
-      <canvas ref={canvasRef} />
-      {ocr}
-    </Container>
+    <>
+      <Container>
+        <Box sx={{ mb: 4 }}>
+          <Button
+            disabled={page === pdfDocument?.numPages}
+            className="next-button"
+            variant="contained"
+            onClick={nextPage}
+          >
+            Next Page
+          </Button>
+          <Button
+            sx={{ mx: 1 }}
+            disabled={page === 1}
+            className="generate-button"
+            variant="contained"
+            onClick={prevPage}
+          >
+            Previous Page
+          </Button>
+          <Button
+            sx={{ mx: 1 }}
+            className="save-button"
+            variant="contained"
+            onClick={saveImage}
+          >
+            Save image
+          </Button>
+          <Button
+            sx={{ mx: 1 }}
+            className="recognize-button"
+            variant="contained"
+            onClick={recognizeText}
+          >
+            Recognize Text
+          </Button>
+        </Box>
+        <Snackbar
+          open={open}
+          autoHideDuration={3000}
+          onClose={handleClose}
+          message={message}
+        />
+        <canvas ref={canvasRef} />
+      </Container>
+      {ocr === "" ? null : <CodeBlock code={ocr} />}
+    </>
   ) : null;
 };
