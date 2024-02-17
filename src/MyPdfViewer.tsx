@@ -4,6 +4,7 @@ import Container from "@mui/material/Container";
 import Box from "@mui/material/Box";
 import Snackbar from "@mui/material/Snackbar";
 import Button from "@mui/material/Button";
+import { createWorker } from "tesseract.js";
 
 export const MyPdfViewer = ({ file }: { file: string }) => {
   const [page, setPage] = useState(1);
@@ -14,7 +15,9 @@ export const MyPdfViewer = ({ file }: { file: string }) => {
     page,
     canvasRef,
   });
-
+  const [open, setOpen] = useState(false);
+  const [message, setMessage] = useState("");
+  const [ocr, setOCr] = useState("");
   const nextPage = () => {
     setPage(page + 1);
   };
@@ -52,13 +55,35 @@ export const MyPdfViewer = ({ file }: { file: string }) => {
     }
   };
 
-  const recognizeText = () => {
-    setMessage("Recognizing text on image!");
+  const recognizeText = async () => {
+    setMessage("Starting to recognize text on image!");
     setOpen(true);
-  };
 
-  const [open, setOpen] = useState(false);
-  const [message, setMessage] = useState("");
+    const canvas = canvasRef.current;
+    if (canvas != null) {
+      const canvasImage = (canvas as any).toDataURL("image/png");
+
+      if (canvasImage != null) {
+        const worker = await createWorker("eng", 1, {
+          logger: (m: any) => {
+            setMessage(
+              "Recognition progress: " + parseInt(m.progress * 100 + "", 10)
+            );
+            setOpen(true);
+          },
+        });
+
+        const {
+          data: { text },
+        } = await worker.recognize(canvasImage);
+
+        setMessage("Done recognizing text on image!");
+        setOpen(true);
+        setOCr(text);
+        await worker.terminate();
+      }
+    }
+  };
 
   const handleClose = (
     _event: React.SyntheticEvent | Event,
@@ -115,6 +140,7 @@ export const MyPdfViewer = ({ file }: { file: string }) => {
         message={message}
       />
       <canvas ref={canvasRef} />
+      {ocr}
     </Container>
   ) : null;
 };
