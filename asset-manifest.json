@@ -1,0 +1,19 @@
+{
+  "files": {
+    "main.css": "/copypasta/static/css/main.c023d930.css",
+    "main.js": "/copypasta/static/js/main.3b3fc65f.js",
+    "static/js/300.9e5e1e98.chunk.js": "/copypasta/static/js/300.9e5e1e98.chunk.js",
+    "static/js/952.2e99fcec.chunk.js": "/copypasta/static/js/952.2e99fcec.chunk.js",
+    "static/js/856.680c588a.chunk.js": "/copypasta/static/js/856.680c588a.chunk.js",
+    "index.html": "/copypasta/index.html",
+    "main.c023d930.css.map": "/copypasta/static/css/main.c023d930.css.map",
+    "main.3b3fc65f.js.map": "/copypasta/static/js/main.3b3fc65f.js.map",
+    "300.9e5e1e98.chunk.js.map": "/copypasta/static/js/300.9e5e1e98.chunk.js.map",
+    "952.2e99fcec.chunk.js.map": "/copypasta/static/js/952.2e99fcec.chunk.js.map",
+    "856.680c588a.chunk.js.map": "/copypasta/static/js/856.680c588a.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.c023d930.css",
+    "static/js/main.3b3fc65f.js"
+  ]
+}
