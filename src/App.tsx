@@ -11,6 +11,7 @@ import { CodeHighlighter } from "./CodeHighlighter";
 import { FileType } from "./constants";
 import { MyPdfViewer } from "./MyPdfViewer";
 import { ImagePreview } from "./ImagePreview";
+import { isStringNullOrWhitespaceOnly } from "./utils";
 
 function App() {
   const [textEntered, setTextEntered] = useState<boolean | null>(null);
@@ -23,7 +24,7 @@ function App() {
   );
 
   useEffect(() => {
-    if (text !== "") {
+    if (!isStringNullOrWhitespaceOnly(text)) {
       setTextEntered(true);
       setComponent(<CodeHighlighter code={text} />);
     } else if (file != null) {

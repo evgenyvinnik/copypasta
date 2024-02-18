@@ -6,6 +6,7 @@ import Snackbar from "@mui/material/Snackbar";
 import Button from "@mui/material/Button";
 import { createWorker } from "tesseract.js";
 import { CodeBlock } from "./CodeBlock";
+import { isStringNullOrWhitespaceOnly } from "./utils";
 
 interface MyPdfViewerProps {
   file: string;
@@ -86,6 +87,10 @@ export const MyPdfViewer = ({ file }: MyPdfViewerProps) => {
         setMessage("Done recognizing text on image!");
         setOpen(true);
         setOCr(text);
+        if (isStringNullOrWhitespaceOnly(text)) {
+          setMessage("Can't recognize text on the image!");
+          setOpen(true);
+        }
         await worker.terminate();
       }
     }
@@ -151,7 +156,7 @@ export const MyPdfViewer = ({ file }: MyPdfViewerProps) => {
           ref={canvasRef}
         />
       </Container>
-      {ocr === "" ? null : <CodeBlock code={ocr} />}
+      {isStringNullOrWhitespaceOnly(ocr) ? null : <CodeBlock code={ocr} />}
     </>
   ) : null;
 };

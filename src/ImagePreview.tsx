@@ -5,6 +5,7 @@ import Snackbar from "@mui/material/Snackbar";
 import Button from "@mui/material/Button";
 import { createWorker } from "tesseract.js";
 import { CodeBlock } from "./CodeBlock";
+import { isStringNullOrWhitespaceOnly } from "./utils";
 
 interface ImagePreviewProps {
   file: string;
@@ -35,6 +36,10 @@ export const ImagePreview = ({ file }: ImagePreviewProps) => {
     setMessage("Done recognizing text on image!");
     setOpen(true);
     setOCr(text);
+    if (isStringNullOrWhitespaceOnly(text)) {
+      setMessage("Can't recognize text on the image!");
+      setOpen(true);
+    }
     await worker.terminate();
   };
 
@@ -75,7 +80,7 @@ export const ImagePreview = ({ file }: ImagePreviewProps) => {
           alt="uploaded file"
         />
       </Container>
-      {ocr === "" ? null : <CodeBlock code={ocr} />}
+      {isStringNullOrWhitespaceOnly(ocr) ? null : <CodeBlock code={ocr} />}
     </>
   );
 };

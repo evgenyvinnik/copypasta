@@ -12,6 +12,7 @@ import Box from "@mui/material/Box";
 import Snackbar from "@mui/material/Snackbar";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
+import { isStringNullOrWhitespaceOnly } from "./utils";
 
 interface CodeHighlighterProps {
   code: string;
@@ -109,7 +110,7 @@ export const CodeHighlighter = ({ code }: CodeHighlighterProps) => {
     makePdf(true);
   };
 
-  return code !== "" ? (
+  return !isStringNullOrWhitespaceOnly(code) ? (
     <>
       <Container>
         <Box sx={{ mb: 4 }}>
