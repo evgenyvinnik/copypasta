@@ -28,7 +28,7 @@ export const CodeBlock = ({ code }: CodeHighlighterProps) => {
           />
         </Box>
       </Container>
-      <CodeHighlighter language="javascript" code={text} />
+      <CodeHighlighter code={text} />
     </>
   );
 };

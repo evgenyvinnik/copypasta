@@ -25,7 +25,7 @@ function App() {
   useEffect(() => {
     if (text !== "") {
       setTextEntered(true);
-      setComponent(<CodeHighlighter language="javascript" code={text} />);
+      setComponent(<CodeHighlighter code={text} />);
     } else if (file != null) {
       setTextEntered(false);
       let reader = new FileReader();
@@ -51,12 +51,7 @@ function App() {
           reader.readAsText(file);
           reader.onload = () => {
             if (!!reader.result) {
-              setComponent(
-                <CodeHighlighter
-                  language="javascript"
-                  code={reader.result.toString()}
-                />
-              );
+              setComponent(<CodeHighlighter code={reader.result.toString()} />);
             }
           };
           break;

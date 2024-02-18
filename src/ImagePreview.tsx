@@ -70,7 +70,7 @@ export const ImagePreview = ({ file }: ImagePreviewProps) => {
         />
         <img
           src={file}
-          style={{ height: "500px", objectFit: "scale-down" }}
+          style={{ width: "100%", objectFit: "scale-down" }}
           loading="lazy"
           alt="uploaded file"
         />

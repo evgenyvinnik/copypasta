@@ -2,30 +2,43 @@ import { useEffect, useState, useRef } from "react";
 import hljs from "highlight.js";
 import "highlight.js/styles/atom-one-dark.css";
 import javascript from "highlight.js/lib/languages/javascript";
+import cpp from "highlight.js/lib/languages/cpp";
+import java from "highlight.js/lib/languages/java";
 import Button from "@mui/material/Button";
 import jsPDF from "jspdf";
 import { MyPdfViewer } from "./MyPdfViewer";
 import Container from "@mui/material/Container";
 import Box from "@mui/material/Box";
 import Snackbar from "@mui/material/Snackbar";
+import Select, { SelectChangeEvent } from "@mui/material/Select";
+import MenuItem from "@mui/material/MenuItem";
 
 interface CodeHighlighterProps {
   code: string;
-  language: string;
 }
 
-export const CodeHighlighter = ({ code, language }: CodeHighlighterProps) => {
+export const CodeHighlighter = ({ code }: CodeHighlighterProps) => {
   const codeRef = useRef<HTMLElement | null>(null);
   const printRef = useRef(null);
 
   const [file, setFile] = useState<string | null>(null);
 
+  const [language, setLanguage] = useState("javascript");
+
+  const handleChange = (event: SelectChangeEvent) => {
+    const lang = event.target.value as string;
+    setLanguage(lang);
+  };
+
   useEffect(() => {
     hljs.registerLanguage("javascript", javascript);
+    hljs.registerLanguage("cpp", cpp);
+    hljs.registerLanguage("java", java);
   }, []);
 
   useEffect(() => {
     if (codeRef.current) {
+      codeRef.current.removeAttribute("data-highlighted");
       hljs.highlightElement(codeRef.current);
     }
   }, [code, language]);
@@ -100,6 +113,16 @@ export const CodeHighlighter = ({ code, language }: CodeHighlighterProps) => {
     <>
       <Container>
         <Box sx={{ mb: 4 }}>
+          <Select
+            sx={{ mb: 1 }}
+            value={language}
+            label="Language"
+            onChange={handleChange}
+          >
+            <MenuItem value={"javascript"}>JavaScript</MenuItem>
+            <MenuItem value={"cpp"}>C++</MenuItem>
+            <MenuItem value={"java"}>Java</MenuItem>
+          </Select>
           <Box sx={{ height: "400px", overflow: "scroll" }}>
             <pre style={{}} ref={printRef}>
               <code ref={codeRef} className={`language-${language}`}>
