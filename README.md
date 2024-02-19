@@ -2,6 +2,8 @@
 
 text -> pdf -> image -> text -> ad infinitum
 
+**Live Demo:** https://evgenyvinnik.github.io/copypasta/
+
 ## About
 Entry for the [Weekly Challenge #5 - Copy Pasta](https://github.com/Algorithm-Arena/weekly-challenge-5-copy-pasta)
 
